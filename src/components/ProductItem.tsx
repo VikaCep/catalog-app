@@ -61,7 +61,7 @@ const Button = styled.button`
 
 export function ProductItem({ item }: { item: Product }) {
     return <Item key={item.id}>
-        <Image src={item.assets?.[0].source} alt={item.name} />
+        <Image src={item.assets?.[0]?.source} alt={item.name} />
         <Content>
             <Name>{item.name}</Name>
             <Description>{item.description}</Description>

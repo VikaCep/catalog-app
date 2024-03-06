@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { ProductItem } from "./ProductItem";
-import { useQuery } from "@apollo/client";
-import { PRODUCTS } from "../graphql/queries";
-import { useMemo } from "react";
+import useGetProducts from "../graphql/useGetProducts";
+import { useState } from "react";
+
+const PRODUCTS_CHUNK = 15;
 
 export interface Product {
   id: number,
@@ -18,16 +19,66 @@ const List = styled.div`
     margin: 20px 100px 0 100px;
 `;
 
+const LoadMoreButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #FF8C00;
+  }
+`;
+
+const LoadMoreContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const MessageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 18px;
+`;
+
 export function ProductList() {
 
-  const { loading, error, data } = useQuery(PRODUCTS);
+  const [limit, setLimit] = useState(PRODUCTS_CHUNK);
 
-  const products = useMemo(() => data?.products?.items ?? [], [data]);
+  const { loading, error, products } = useGetProducts({ take: limit });
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
+  const handleLoadMore = () => {
+    if (limit + PRODUCTS_CHUNK > 100) {
+      setLimit(100);
+      return;
+    }
+    setLimit(limit + PRODUCTS_CHUNK);
+  }
 
-  return <List>
-    {products.map((item: Product) => <ProductItem item={item} />)}
-  </List>
+  if (loading) {
+    return <MessageContainer>Loading...</MessageContainer>
+  };
+  if (error) {
+    return <MessageContainer>Error: {error.message}</MessageContainer>
+  };
+
+  return <>
+    <List>
+      {products.map((item: Product) => (
+        <ProductItem key={item.id} item={item} />
+      ))}
+    </List>
+    {limit < 100 && <LoadMoreContainer>
+      <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>
+    </LoadMoreContainer>}
+  </>
 }
