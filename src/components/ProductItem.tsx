@@ -8,9 +8,7 @@ import { ADD_ITEM_TO_ORDER } from "../graphql/mutations";
 export function ProductItem({ item }: { item: Product }) {
 
   const [addToOrder, { loading, error }] = useMutation(ADD_ITEM_TO_ORDER)
-
   const [selectedVariant, setSelectedVariant] = useState(item.variants[0]);
-
   const { updateTotal } = useCart();
 
   const handleBuy = async () => {
@@ -21,7 +19,7 @@ export function ProductItem({ item }: { item: Product }) {
     updateTotal(selectedVariant.price);
   }
 
-  return <Item key={item.id}>
+  return <Item key={item.id} data-testid='product-item'>
     <Image src={item.assets?.[0]?.source} alt={item.name} />
     <Content>
       <Name>{item.name}</Name>

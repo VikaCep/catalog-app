@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext } from 'react';
 import useStateWithStorage from './hooks/useStateWithStorage';
 
 export interface Variant { id: string, name: string, price: number }

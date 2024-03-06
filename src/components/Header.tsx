@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import { Variant, useCart } from "../CartContext";
-import { useMemo } from "react";
+import { useCart } from "../CartContext";
 
 export function Header() {
 

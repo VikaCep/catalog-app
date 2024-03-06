@@ -29,9 +29,9 @@ export function ProductList() {
 
   return <>
     <List>
-      {products.map((item: Product) => (
-        <ProductItem key={item.id} item={item} />
-      ))}
+      {products.map((item: Product) => {
+        return <ProductItem key={item.id} item={item} />
+      })}
     </List>
     {limit < 100 && <LoadMoreContainer>
       <LoadMoreButton onClick={handleLoadMore}>Load more</LoadMoreButton>
@@ -49,32 +49,32 @@ const List = styled.div`
 `;
 
 const LoadMoreButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #FFA500;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease;
 
-  &:hover {
-    background-color: #FF8C00;
-  }
+    &:hover {
+      background-color: #FF8C00;
+    }
 `;
 
 const LoadMoreContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
 `;
 
 const MessageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  font-size: 18px;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    font-size: 18px;
 `;
