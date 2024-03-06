@@ -22,6 +22,8 @@
 
     `yarn test`
 
+  Note: the node version used to run this project is `v16.20.2`.
+
 ### How it looks
 
 Upon running the app the items view will be shown.
