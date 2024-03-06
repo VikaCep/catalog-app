@@ -1,22 +1,15 @@
 import styled from "styled-components";
 import { ProductItem } from "./ProductItem";
+import { useQuery } from "@apollo/client";
+import { PRODUCTS } from "../graphql/queries";
+import { useMemo } from "react";
 
-export interface ItemInterface {
+export interface Product {
   id: number,
-  content: string
+  name: string,
+  description: string,
+  assets: [{ source: string }]
 }
-
-const items: ItemInterface[] = [
-  { id: 1, content: 'Item 1' },
-  { id: 2, content: 'Item 2' },
-  { id: 3, content: 'Item 3' },
-  { id: 4, content: 'Item 4' },
-  { id: 5, content: 'Item 5' },
-  { id: 6, content: 'Item 6' },
-  { id: 7, content: 'Item 7' },
-  { id: 8, content: 'Item 8' },
-  { id: 9, content: 'Item 9' },
-];
 
 const List = styled.div`
     display: flex;
@@ -26,7 +19,15 @@ const List = styled.div`
 `;
 
 export function ProductList() {
+
+  const { loading, error, data } = useQuery(PRODUCTS);
+
+  const products = useMemo(() => data?.products?.items ?? [], [data]);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error : {error.message}</p>;
+
   return <List>
-    {items.map(item => <ProductItem item={item} />)}
+    {products.map((item: Product) => <ProductItem item={item} />)}
   </List>
 }
