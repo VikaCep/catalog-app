@@ -11,14 +11,14 @@ export function ProductItem({ item }: { item: Product }) {
 
   const [selectedVariant, setSelectedVariant] = useState(item.variants[0]);
 
-  const { addItemToCart } = useCart();
+  const { updateTotal } = useCart();
 
   const handleBuy = async () => {
     await addToOrder({ variables: { productVariantId: selectedVariant.id, quantity: 1 } });
     if (error) {
       return;
     }
-    addItemToCart(selectedVariant);
+    updateTotal(selectedVariant.price);
   }
 
   return <Item key={item.id}>

@@ -4,12 +4,7 @@ import { useMemo } from "react";
 
 export function Header() {
 
-  const { cartItems } = useCart();
-  const total = useMemo(() => {
-    return cartItems.reduce((acc: number, item: Variant) => {
-      return acc + item.price;
-    }, 0);
-  }, [cartItems]);
+  const { cartTotal } = useCart();
 
   return (
     <StyledHeader>
@@ -17,7 +12,7 @@ export function Header() {
         src="https://santex.wpengine.com/wp-content/uploads/2019/02/logo-santex@3x.png"
         alt="logo"
       />
-      <TotalContainer>Total: ${total}</TotalContainer>
+      <TotalContainer>Total: ${cartTotal}</TotalContainer>
     </StyledHeader>
   );
 }

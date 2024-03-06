@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
+import useStateWithStorage from './hooks/useStateWithStorage';
 
 export interface Variant { id: string, name: string, price: number }
 export interface Product {
@@ -10,27 +11,27 @@ export interface Product {
 }
 
 interface CartContextType {
-    cartItems: Variant[];
-    addItemToCart: (item: Variant) => void;
+    cartTotal: number,
+    updateTotal: (itemPrice: number) => void;
 }
 
 const CartContext = createContext<CartContextType>({
-    cartItems: [],
-    addItemToCart: () => { }
+    cartTotal: 0,
+    updateTotal: () => { }
 });
 
 export const useCart = () => useContext(CartContext);
 
 export const CartProvider: React.FC = ({ children }) => {
-    const [cartItems, setCartItems] = useState<Variant[]>([]);
+    const [cartTotal, setCartTotal] = useStateWithStorage('cartTotal', 0);
 
-    const addItemToCart = (item: Variant) => {
-        setCartItems([...cartItems, item]);
-    };
+    const updateTotal = (itemPrice: number) => {
+        setCartTotal(cartTotal + itemPrice);
+    }
 
     return (
-        <CartContext.Provider value={{ cartItems, addItemToCart }}>
+        <CartContext.Provider value={{ cartTotal, updateTotal }}>
             {children}
         </CartContext.Provider>
     );
-};
+}
