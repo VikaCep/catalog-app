@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Product, Variant } from "./ProductList";
+import { Product, Variant, useCart } from "../CartContext";
 import VariantSelector from "./VariantSelector";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
@@ -7,12 +7,18 @@ import { ADD_ITEM_TO_ORDER } from "../graphql/mutations";
 
 export function ProductItem({ item }: { item: Product }) {
 
-  const [addToOrder, { loading }] = useMutation(ADD_ITEM_TO_ORDER)
+  const [addToOrder, { loading, error }] = useMutation(ADD_ITEM_TO_ORDER)
 
   const [selectedVariant, setSelectedVariant] = useState(item.variants[0]);
 
-  const handleBuy = () => {
-    addToOrder({ variables: { productVariantId: selectedVariant.id, quantity: 1 } });
+  const { addItemToCart } = useCart();
+
+  const handleBuy = async () => {
+    await addToOrder({ variables: { productVariantId: selectedVariant.id, quantity: 1 } });
+    if (error) {
+      return;
+    }
+    addItemToCart(selectedVariant);
   }
 
   return <Item key={item.id}>

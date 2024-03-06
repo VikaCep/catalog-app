@@ -2,19 +2,9 @@ import styled from "styled-components";
 import { ProductItem } from "./ProductItem";
 import useGetProducts from "../graphql/useGetProducts";
 import { useState } from "react";
+import { Product } from "../CartContext";
 
 const PRODUCTS_CHUNK = 15;
-
-export interface Variant { id: string, name: string, price: number }
-
-
-export interface Product {
-  id: number,
-  name: string,
-  description: string,
-  assets: [{ source: string }]
-  variants: [Variant]
-}
 
 export function ProductList() {
 
@@ -54,7 +44,8 @@ const List = styled.div`
     flex-wrap: wrap;
     justify-content: left; 
     margin: 20px auto 0 auto;
-    max-width: 1200px; 
+    max-width: 1200px;
+    column-gap: 30px;
 `;
 
 const LoadMoreButton = styled.button`

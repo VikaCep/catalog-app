@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Variant, Product } from './ProductList';
+import { Variant, Product } from '../CartContext';
 import styled from 'styled-components';
 
 function VariantSelector({ item, onVariantSelected }: { item: Product, onVariantSelected: (variant: Variant) => void }) {

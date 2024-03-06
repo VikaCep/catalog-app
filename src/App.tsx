@@ -1,19 +1,16 @@
-import styled from 'styled-components';
 import { Header } from './components/Header';
 import { ProductList } from './components/ProductList';
-
-const AppContainer = styled.div`
-`;
-
+import { CartProvider } from './CartContext';
 
 function App() {
   return (
-    <AppContainer>
+    <CartProvider>
       <Header></Header>
       <div>
         <ProductList></ProductList>
       </div>
-    </AppContainer>
+    </CartProvider>
+
   );
 }
 
