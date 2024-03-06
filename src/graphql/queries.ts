@@ -10,6 +10,11 @@ query GetProducts($options: ProductListOptions) {
             assets {
                 source
             }
+            variants {
+                id
+                name
+                price
+            }
         }
     }
 }

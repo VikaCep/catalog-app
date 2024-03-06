@@ -5,50 +5,16 @@ import { useState } from "react";
 
 const PRODUCTS_CHUNK = 15;
 
+export interface Variant { id: string, name: string, price: number }
+
+
 export interface Product {
   id: number,
   name: string,
   description: string,
   assets: [{ source: string }]
+  variants: [Variant]
 }
-
-const List = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: left;
-    margin: 20px 100px 0 100px;
-`;
-
-const LoadMoreButton = styled.button`
-  margin-top: 20px;
-  padding: 10px 20px;
-  background-color: #FFA500;
-  color: white;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #FF8C00;
-  }
-`;
-
-const LoadMoreContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-`;
-
-const MessageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  font-size: 18px;
-`;
 
 export function ProductList() {
 
@@ -82,3 +48,42 @@ export function ProductList() {
     </LoadMoreContainer>}
   </>
 }
+
+const List = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left; 
+    margin: 20px auto 0 auto;
+    max-width: 1200px; 
+`;
+
+const LoadMoreButton = styled.button`
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #FF8C00;
+  }
+`;
+
+const LoadMoreContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+`;
+
+const MessageContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-size: 18px;
+`;

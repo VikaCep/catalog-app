@@ -1,9 +1,34 @@
 import styled from "styled-components";
-import { Product } from "./ProductList";
+import { Product, Variant } from "./ProductList";
+import VariantSelector from "./VariantSelector";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_ITEM_TO_ORDER } from "../graphql/mutations";
 
+export function ProductItem({ item }: { item: Product }) {
+
+  const [addToOrder, { loading }] = useMutation(ADD_ITEM_TO_ORDER)
+
+  const [selectedVariant, setSelectedVariant] = useState(item.variants[0]);
+
+  const handleBuy = () => {
+    addToOrder({ variables: { productVariantId: selectedVariant.id, quantity: 1 } });
+  }
+
+  return <Item key={item.id}>
+    <Image src={item.assets?.[0]?.source} alt={item.name} />
+    <Content>
+      <Name>{item.name}</Name>
+      <VariantSelector item={item} onVariantSelected={(variant: Variant) => setSelectedVariant(variant)} />
+      <Description>{item.description}</Description>
+    </Content>
+    {!loading && <Button onClick={() => handleBuy()}>Buy</Button>}
+    {loading && <Button disabled={true} onClick={() => handleBuy()}>Adding to cart...</Button>}
+  </Item>
+}
 
 const Item = styled.div`
-  width: 200px;
+  width: 250px;
   margin: 10px;
   background-color: #f9f9f9;
   border-radius: 5px;
@@ -57,15 +82,3 @@ const Button = styled.button`
     background-color: #45a049;
   }
 `;
-
-
-export function ProductItem({ item }: { item: Product }) {
-    return <Item key={item.id}>
-        <Image src={item.assets?.[0]?.source} alt={item.name} />
-        <Content>
-            <Name>{item.name}</Name>
-            <Description>{item.description}</Description>
-        </Content>
-        <Button>Buy</Button>
-    </Item>
-}
