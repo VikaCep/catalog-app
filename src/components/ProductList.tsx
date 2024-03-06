@@ -10,11 +10,12 @@ export function ProductList() {
 
   const [limit, setLimit] = useState(PRODUCTS_CHUNK);
 
+  //Obtaining the products. If fetching too many, then the endpoing breaks so it's better to fetch it in smaller amounts
   const { loading, error, products } = useGetProducts({ take: limit });
 
   const handleLoadMore = () => {
     if (limit + PRODUCTS_CHUNK > 100) {
-      setLimit(100);
+      setLimit(100); //the endopoint won't return more than 100
       return;
     }
     setLimit(limit + PRODUCTS_CHUNK);

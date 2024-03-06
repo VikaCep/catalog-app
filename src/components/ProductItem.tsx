@@ -9,6 +9,8 @@ export function ProductItem({ item }: { item: Product }) {
 
   const [addToOrder, { loading, error }] = useMutation(ADD_ITEM_TO_ORDER)
   const [selectedVariant, setSelectedVariant] = useState(item.variants[0]);
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const { updateTotal } = useCart();
 
   const handleBuy = async () => {
@@ -16,6 +18,7 @@ export function ProductItem({ item }: { item: Product }) {
     if (error) {
       return;
     }
+    //keep track of the total amount in the cart using CartContext
     updateTotal(selectedVariant.price);
   }
 
@@ -24,7 +27,13 @@ export function ProductItem({ item }: { item: Product }) {
     <Content>
       <Name>{item.name}</Name>
       <VariantSelector item={item} onVariantSelected={(variant: Variant) => setSelectedVariant(variant)} />
-      <Description>{item.description}</Description>
+      <TooltipContainer
+        onMouseEnter={() => setShowTooltip(true)}
+        onMouseLeave={() => setShowTooltip(false)}
+      >
+        <Description>{item.description}</Description>
+        {showTooltip && <Tooltip>{item.description}</Tooltip>}
+      </TooltipContainer>
     </Content>
     {!loading && <Button onClick={() => handleBuy()}>Buy</Button>}
     {loading && <Button disabled={true} onClick={() => handleBuy()}>Adding to cart...</Button>}
@@ -67,8 +76,28 @@ const Description = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
+  cursor: pointer;
+`;
+
+const TooltipContainer = styled.div`
+  position: relative;
+`;
+
+const Tooltip = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  border-radius: 5px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.3s, opacity 0.3s;
 `;
 
 const Button = styled.button`

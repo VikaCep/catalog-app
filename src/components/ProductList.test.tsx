@@ -21,7 +21,6 @@ describe('ProductList', () => {
     it('Displays a Loading indication while fetching items', () => {
         const loadingText = screen.getByText(/Loading.../i);
         expect(loadingText).toBeInTheDocument();
-
     });
 
     it('must render 2 products', async () => {
