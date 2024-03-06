@@ -59,7 +59,7 @@ Since there are several item variants for each product and the price depends on 
 - For tests, I'm using `Jest` and `react-testing-library` to make sure components and custom hooks are behaving as it is expected.
 
 ### Future Improvements
-
+- Improving caching so that when more items are loaded, the previous ones are not re-fetched.
 - The data types could be generated automatically using Apollo Codegen. I didn't do it in this project because there were simple interfaces but as the model grows bigger I believe that would be a better option.
 - Display information about the current cart by consuming the `activeOrder` GraphQL query instead of having to save the total locally into `localStorage`, even though this involves making an extra request to the server.
 - E2E tests should be added, a good library for this would be Cypress, as I believe it's very important to have good coverage of the codebase in order to deliver a robust application.
