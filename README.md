@@ -18,6 +18,8 @@
 
     `yarn start`
 
+  This will load the app in the browser under http://localhost:3000/
+
 - Run unit tests using
 
     `yarn test`
