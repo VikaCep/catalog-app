@@ -1,4 +1,4 @@
-# Santex RBI Team - Front End Training Challenge
+Example catalog app
 
 ### Tools I used:
 
