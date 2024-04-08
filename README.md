@@ -1,4 +1,4 @@
-Example catalog app
+# Example catalog app
 
 ### Tools I used:
 
@@ -29,9 +29,6 @@ Example catalog app
 ### How it looks
 
 Upon running the app the items view will be shown.
- 
-<img width="1788" alt="image" src="https://github.com/VikaCep/santex-fe/assets/6271380/8a1e3e27-5c72-4730-83ca-d4770a37d924">
-
 
 By default it lists the first 15 products not to retrieve a very big response from the server. You can load more items by pressing the Load More button, which fetches 15 more each time.
 
